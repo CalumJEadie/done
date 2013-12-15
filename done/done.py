@@ -3,6 +3,7 @@ import os
 from os.path import join
 import string
 import datetime
+import re
 
 from PySide.QtCore import *
 from PySide.QtGui import *
@@ -36,6 +37,16 @@ class Done(QMainWindow):
         self._center()
         self.setStyleSheet(STYLESHEET)
 
+        # Set up actions.
+        sortDueAscendingAction = QAction("Sort by due earliest first", self)
+        sortDueAscendingAction.triggered.connect(self._sortDueAscending)
+
+        # Set up toolbar
+        toolbar = self.addToolBar('')
+        toolbar.setFloatable(False)
+        toolbar.setMovable(False)
+        toolbar.addAction(sortDueAscendingAction)
+
         # Set up central widget.
         
         centralWidget = QWidget(self)
@@ -68,6 +79,31 @@ class Done(QMainWindow):
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
+
+    def _sortDueAscending(self):
+        todoList = self._todoListEdit.toPlainText().encode('utf8')
+
+        # due_re = r"due:([\d\-]*)"
+        due_re = r"due:(.*)"
+        def extract_due(t):
+            match = re.search(due_re, t)
+            if match:
+                return match.group(1)
+            else:
+                return None
+        def key(t):
+            due = extract_due(t)
+            if due:
+                return " " + extract_due(t) + t
+            else:
+                return t
+
+        todoList = todoList.split("\n")
+        todoList.sort(key=key)
+        todoList = "\n".join(todoList).decode('utf8')
+
+        self._todoListEdit.setPlainText(todoList)
+
 
 
 def main():
