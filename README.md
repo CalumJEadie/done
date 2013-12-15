@@ -1,7 +1,18 @@
 done
 ====
 
-A graphical interface for your todo.txt file.
+A lean graphical interface for your todo.txt file.
+
+Features
+--------
+
+- Simple, direct manipulation. Use a text editor component for modifying your todo.txt, rather than the indirection of the command line client or row based GUI clients.
+  ![Simple, direct manipulation](screenshots/screenshot-1.png)
+- Sort by due date.
+  ![Sort by due date](screenshots/screenshot-2.png)
+- Instant update. If you're using a service like Dropbox, any changes made in the editor are synced across all your devices straight away, like the Todo.txt Android App.
+
+  ![Instant update](screenshots/screenshot-3.png)
 
 Usage
 -----
@@ -15,17 +26,34 @@ cd done
 Dependancies
 ------------
 
-[PySide](http://qt-project.org/wiki/Get-PySide) - Python Qt bindings
-
+[PySide](http://qt-project.org/wiki/PySide) - Python Qt bindings
 
 Motivation
 ----------
 
-I'm a huge fan of Gina Trapani's [todo.txt](http://todotxt.com/) method for managing a todo list. I've often thought about what the GUI equivalent of the speed of a todo.txt file would be. So, a few evenings ago I put some [mock ups together](http://www.calumjeadie.com/2013/12/01/what-would-a-really-optimised-GUI-for-Todo.txt-look-like%3F.html) and this evening thought I'd see how far I could get in a couple of hours.
+A _"lets see what you can get done in an evening"_ project!
 
-Features
---------
+I'm a huge fan of Gina Trapani's [todo.txt](http://todotxt.com/) method for managing a todo list. I'd thought about what a [GUI for todo.txt](http://www.calumjeadie.com/2013/12/01/what-would-a-really-optimised-GUI-for-Todo.txt-look-like%3F.html) could like before and this is a very basic implementation of those ideas.
 
-- Use a text editor to edit your todo.txt file, rather than the indirection of the command line client or row based GUI clients.
-- Instant update. Any changes in the editor are written to disk straight away. If you're storing your todo.txt file in a service like Dropbox, it'll sync straight away, like in the Todo.txt Android App.
-- Sort by due date.
+Contributing
+------------
+
+Contributions are very welcome!
+
+Key issues:
+
+- [ ] Difficult to install dependancies and run. Would be great if someone with experience of packaging PySide apps could suggest how to go about this.
+
+License
+-------
+
+done is licensed under a MIT license. See LICENSE.txt.
+
+Resources
+---------
+
+http://todotxt.com/
+
+https://github.com/ginatrapani/todo.txt-cli/wiki/The-Todo.txt-Format
+
+http://todotxt.com/todo.txt
