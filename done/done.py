@@ -11,12 +11,12 @@ from PySide.QtGui import *
 TODO_DIR = os.path.expanduser("~/todo")
 TODO_FILE = join(TODO_DIR, "todo.txt")
 
-# STYLESHEET = """
-# QToolBar QWidget
-# {
-#     font-size: 14px
-# }
-# """
+STYLESHEET = """
+QPlainTextEdit
+{
+    font-size: 18px;
+}
+"""
 
 class Done(QMainWindow):
 
@@ -32,8 +32,9 @@ class Done(QMainWindow):
         # Set up window.
 
         self.setWindowTitle(TODO_FILE)
-        self.resize(400, 400)
-        # self.setStyleSheet(STYLESHEET)
+        self.resize(600, 600)
+        self._center()
+        self.setStyleSheet(STYLESHEET)
 
         # Set up central widget.
         
@@ -52,14 +53,21 @@ class Done(QMainWindow):
 
         self.setCentralWidget(centralWidget)
 
-        # Show window.
+        # Show window and bring to top.
         self.show()
+        self.raise_()
 
     def _saveTodoList(self):
         todoList = self._todoListEdit.toPlainText().encode('utf8')
         self._todoListFile.seek(0)
         self._todoListFile.write(todoList)
         self._todoListFile.truncate()
+
+    def _center(self):
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
 
 
 def main():
