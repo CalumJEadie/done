@@ -1,4 +1,4 @@
 done
 ====
 
-A graphical interace for todo.txt.
+A graphical interface for your todo.txt file.
