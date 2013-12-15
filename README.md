@@ -42,7 +42,7 @@ Contributions are very welcome!
 
 Key issues:
 
-- [ ] Difficult to install dependancies and run. Would be great if someone with experience of packaging PySide apps could suggest how to go about this.
+- Difficult to install dependancies and run. Would be great if someone with experience of packaging PySide apps could suggest how to go about this.
 
 License
 -------
