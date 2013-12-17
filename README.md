@@ -57,3 +57,7 @@ http://todotxt.com/
 https://github.com/ginatrapani/todo.txt-cli/wiki/The-Todo.txt-Format
 
 http://todotxt.com/todo.txt
+
+http://qt-project.org/wiki/Packaging_PySide_applications_on_MacOS
+
+https://plashless.wordpress.com/2013/05/01/python-pyside-qt-pyinstaller-apps-on-osx/
