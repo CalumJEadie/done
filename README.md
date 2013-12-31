@@ -14,8 +14,19 @@ Features
 
   ![Instant update](screenshots/screenshot-3.png)
 
-Usage
------
+Packaging
+---------
+
+Install PySide.
+
+```
+python setup-osx.py py2app
+```
+
+Developing
+----------
+
+Install PySide.
 
 ```sh
 git clone git@github.com:CalumJEadie/done.git
@@ -28,6 +39,8 @@ Dependancies
 
 [PySide](http://qt-project.org/wiki/PySide) - Python Qt bindings
 
+- `brew install pyside`
+
 Motivation
 ----------
 
@@ -39,10 +52,6 @@ Contributing
 ------------
 
 Contributions are very welcome!
-
-Key issues:
-
-- Difficult to install dependancies and run. Would be great if someone with experience of packaging PySide apps could suggest how to go about this.
 
 License
 -------
