@@ -10,5 +10,10 @@ from setuptools import setup
 
 setup(
     setup_requires=['py2app'],
-    app=['done/done.py']
+    app=['done/done.py'],
+    options={
+        'py2app': {
+            'iconfile': 'done.icns'
+        }
+    }
 )

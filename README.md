@@ -58,6 +58,11 @@ License
 
 done is licensed under a MIT license. See LICENSE.txt.
 
+Acknowledgements
+----------------
+
+done uses the todo.txt icon from the iOS and Android apps.
+
 Resources
 ---------
 
