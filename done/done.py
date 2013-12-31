@@ -24,9 +24,13 @@ class Done(QMainWindow):
     def __init__(self):
         super(Done, self).__init__()
 
-        self._todoListFile = open(TODO_FILE, "r+")
-
         self._initUI()
+
+        self._loadTodoList()
+
+        # Show window and bring to top.
+        self.show()
+        self.raise_()
 
     def _initUI(self):
 
@@ -38,13 +42,18 @@ class Done(QMainWindow):
         self.setStyleSheet(STYLESHEET)
 
         # Set up actions.
-        sortDueAscendingAction = QAction("Sort by due earliest first", self)
+        sortDueAscendingAction = QAction("Sort", self)
+        sortDueAscendingAction.setToolTip("Sort by due earliest first")
         sortDueAscendingAction.triggered.connect(self._sortDueAscending)
+
+        loadAction = QAction("Reload", self)
+        loadAction.triggered.connect(self._loadTodoList)
 
         # Set up toolbar
         toolbar = self.addToolBar('')
         toolbar.setFloatable(False)
         toolbar.setMovable(False)
+        toolbar.addAction(loadAction)
         toolbar.addAction(sortDueAscendingAction)
 
         # Set up central widget.
@@ -54,8 +63,6 @@ class Done(QMainWindow):
         vboxLayout = QVBoxLayout()
 
         self._todoListEdit = QPlainTextEdit()
-        todoList = self._todoListFile.read().decode('utf8')
-        self._todoListEdit.setPlainText(todoList)
         self._todoListEdit.textChanged.connect(self._saveTodoList)
 
         vboxLayout.addWidget(self._todoListEdit)
@@ -64,15 +71,13 @@ class Done(QMainWindow):
 
         self.setCentralWidget(centralWidget)
 
-        # Show window and bring to top.
-        self.show()
-        self.raise_()
+    def _loadTodoList(self):
+        todoList = self._todoList
+        self._todoListEdit.setPlainText(todoList)
 
     def _saveTodoList(self):
         todoList = self._todoListEdit.toPlainText().encode('utf8')
-        self._todoListFile.seek(0)
-        self._todoListFile.write(todoList)
-        self._todoListFile.truncate()
+        self._todoList = todoList
 
     def _center(self):
         qr = self.frameGeometry()
@@ -104,7 +109,16 @@ class Done(QMainWindow):
 
         self._todoListEdit.setPlainText(todoList)
 
+    @property
+    def _todoList(self):
+        with open(TODO_FILE, "r+") as todoListFile:
+            return todoListFile.read().decode('utf8')
 
+    @_todoList.setter
+    def _todoList(self, todoList):
+        with open(TODO_FILE, "r+") as todoListFile:
+            todoListFile.write(todoList)
+            todoListFile.truncate()
 
 def main():
     app = QApplication(sys.argv)
