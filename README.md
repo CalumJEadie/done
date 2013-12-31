@@ -20,7 +20,7 @@ Packaging
 Install PySide.
 
 ```
-python setup-osx.py py2app
+make osx
 ```
 
 Developing
