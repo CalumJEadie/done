@@ -19,6 +19,8 @@ QPlainTextEdit
 }
 """
 
+DEBUG = True
+
 class Done(QMainWindow):
 
     def __init__(self):
@@ -49,12 +51,17 @@ class Done(QMainWindow):
         loadAction = QAction("Reload", self)
         loadAction.triggered.connect(self._loadTodoList)
 
+        debugAction = QAction("Debug", self)
+        debugAction.triggered.connect(self._debug)
+
         # Set up toolbar
         toolbar = self.addToolBar('')
         toolbar.setFloatable(False)
         toolbar.setMovable(False)
         toolbar.addAction(loadAction)
         toolbar.addAction(sortDueAscendingAction)
+        if DEBUG:
+            toolbar.addAction(debugAction)
 
         # Set up central widget.
         
@@ -119,6 +126,10 @@ class Done(QMainWindow):
         with open(TODO_FILE, "r+") as todoListFile:
             todoListFile.write(todoList)
             todoListFile.truncate()
+
+    def _debug(self):
+        from pudb import set_trace
+        set_trace()
 
 def main():
     app = QApplication(sys.argv)
