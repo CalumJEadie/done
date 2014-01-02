@@ -1,8 +1,8 @@
-(A) Call Mom @Phone +Family
-(A) Schedule annual checkup +Health due:2013-12-17
 (B) Outline chapter 5 +Novel @Computer due:2013-12-16
+Pick up milk @GroceryStore due:2013-12-16
+(A) Schedule annual checkup +Health due:2013-12-17
+(A) Call Mom @Phone +Family
 (C) Add cover sheets @Office +TPSReports
 Plan backyard herb garden @Home
-Pick up milk @GroceryStore due:2013-12-16
 Research self-publishing services +Novel @Computer
 x Download Todo.txt mobile app @Phone
