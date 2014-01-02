@@ -27,6 +27,7 @@ QWidget
 QPlainTextEdit
 {
     font-size: 18px;
+    font-family: "Menlo";
 }
 """
 
