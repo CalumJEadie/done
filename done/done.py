@@ -4,9 +4,14 @@ from os.path import join
 import string
 import datetime
 import re
+import logging
+import subprocess
 
 from PySide.QtCore import *
 from PySide.QtGui import *
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Configuration
 TODO_DIR = os.path.expanduser("~/todo")
@@ -51,6 +56,9 @@ class Done(QMainWindow):
         loadAction = QAction("Reload", self)
         loadAction.triggered.connect(self._loadTodoList)
 
+        archiveAction = QAction("Archive", self)
+        archiveAction.triggered.connect(self._archive)
+
         debugAction = QAction("Debug", self)
         debugAction.triggered.connect(self._debug)
 
@@ -60,6 +68,7 @@ class Done(QMainWindow):
         toolbar.setMovable(False)
         toolbar.addAction(loadAction)
         toolbar.addAction(sortDueAscendingAction)
+        toolbar.addAction(archiveAction)
         if DEBUG:
             toolbar.addAction(debugAction)
 
@@ -130,6 +139,10 @@ class Done(QMainWindow):
     def _debug(self):
         from pudb import set_trace
         set_trace()
+
+    def _archive(self):
+        subprocess.call(["todo.sh", "archive"])
+        self._loadTodoList()
 
 def main():
     app = QApplication(sys.argv)
