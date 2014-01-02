@@ -74,7 +74,7 @@ class Done(QMainWindow):
         debugAction = QAction("Debug", self)
         debugAction.triggered.connect(self._startDebug)
 
-        doneWebsiteAction = QAction("done Website", self)
+        doneWebsiteAction = QAction("Done Website", self)
         doneWebsiteAction.triggered.connect(self._doneWebsite)
 
         # Set up toolbar

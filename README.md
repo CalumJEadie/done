@@ -1,4 +1,4 @@
-done
+Done
 ====
 
 A lean graphical interface for your todo.txt file.
@@ -56,12 +56,12 @@ Contributions are very welcome!
 License
 -------
 
-done is licensed under a MIT license. See LICENSE.txt.
+Done is licensed under a MIT license. See LICENSE.txt.
 
 Acknowledgements
 ----------------
 
-done uses the todo.txt icon from the iOS and Android apps.
+Done uses the todo.txt icon from the iOS and Android apps.
 
 Resources
 ---------

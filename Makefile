@@ -1,4 +1,4 @@
-all: clean osx
+all: osx
 
 osx:
 	python setup-osx.py py2app

@@ -9,6 +9,7 @@ Usage: python setup-osx.py py2app
 from setuptools import setup
 
 setup(
+    name="Done",
     setup_requires=['py2app'],
     app=['done/done.py'],
     options={
