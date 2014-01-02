@@ -6,6 +6,7 @@ import datetime
 import re
 import logging
 import subprocess
+import argparse
 
 from PySide.QtCore import *
 from PySide.QtGui import *
@@ -24,12 +25,11 @@ QPlainTextEdit
 }
 """
 
-DEBUG = True
-
 class Done(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, debug):
         super(Done, self).__init__()
+        self._debug = debug
 
         self._initUI()
 
@@ -60,7 +60,7 @@ class Done(QMainWindow):
         archiveAction.triggered.connect(self._archive)
 
         debugAction = QAction("Debug", self)
-        debugAction.triggered.connect(self._debug)
+        debugAction.triggered.connect(self._startDebug)
 
         # Set up toolbar
         toolbar = self.addToolBar('')
@@ -69,7 +69,7 @@ class Done(QMainWindow):
         toolbar.addAction(loadAction)
         toolbar.addAction(sortDueAscendingAction)
         toolbar.addAction(archiveAction)
-        if DEBUG:
+        if self._debug:
             toolbar.addAction(debugAction)
 
         # Set up central widget.
@@ -136,7 +136,7 @@ class Done(QMainWindow):
             todoListFile.write(todoList)
             todoListFile.truncate()
 
-    def _debug(self):
+    def _startDebug(self):
         from pudb import set_trace
         set_trace()
 
@@ -145,8 +145,12 @@ class Done(QMainWindow):
         self._loadTodoList()
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--debug', action="store_true")
+    args = parser.parse_args()
+
     app = QApplication(sys.argv)
-    done = Done()
+    done = Done(args.debug)
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
