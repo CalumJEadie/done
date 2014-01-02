@@ -30,6 +30,8 @@ QPlainTextEdit
 }
 """
 
+DONE_WEBSITE = "https://github.com/CalumJEadie/done"
+
 class Done(QMainWindow):
 
     def __init__(self, debug):
@@ -58,25 +60,45 @@ class Done(QMainWindow):
         sortDueAscendingAction = QAction("Sort", self)
         sortDueAscendingAction.setToolTip("Sort by due earliest first")
         sortDueAscendingAction.triggered.connect(self._sortDueAscending)
+        sortDueAscendingAction.setShortcut(QKeySequence("Ctrl+S"))
 
-        loadAction = QAction("Reload", self)
-        loadAction.triggered.connect(self._loadTodoList)
+        reloadAction = QAction("Reload", self)
+        reloadAction.triggered.connect(self._loadTodoList)
+        reloadAction.setShortcut(QKeySequence.Refresh)
 
         archiveAction = QAction("Archive", self)
+        archiveAction.setToolTip("Archive completed actions")
         archiveAction.triggered.connect(self._archive)
+        archiveAction.setShortcut(QKeySequence("Ctrl+E"))
 
         debugAction = QAction("Debug", self)
         debugAction.triggered.connect(self._startDebug)
+
+        doneWebsiteAction = QAction("done Website", self)
+        doneWebsiteAction.triggered.connect(self._doneWebsite)
 
         # Set up toolbar
         toolbar = self.addToolBar('')
         toolbar.setFloatable(False)
         toolbar.setMovable(False)
-        toolbar.addAction(loadAction)
+        toolbar.addAction(reloadAction)
         toolbar.addAction(sortDueAscendingAction)
         toolbar.addAction(archiveAction)
         if self._debug:
             toolbar.addAction(debugAction)
+
+        # Set up menu bar
+        menubar = QMenuBar()
+
+        fileMenu = menubar.addMenu('&File')
+        fileMenu.addAction(reloadAction)
+        editMenu = menubar.addMenu('&Edit')
+        editMenu.addAction(sortDueAscendingAction)
+        editMenu.addAction(archiveAction)
+        helpMenu = menubar.addMenu('&Help')
+        helpMenu.addAction(doneWebsiteAction)
+
+        self.setMenuBar(menubar)
 
         # Set up central widget.
         
@@ -149,6 +171,9 @@ class Done(QMainWindow):
     def _archive(self):
         subprocess.call(["todo.sh", "archive"])
         self._loadTodoList()
+
+    def _doneWebsite(self):
+        QDesktopServices.openUrl(QUrl(DONE_WEBSITE, QUrl.TolerantMode))
 
 def main():
     parser = argparse.ArgumentParser()
