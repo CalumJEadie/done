@@ -19,6 +19,11 @@ TODO_DIR = os.path.expanduser("~/todo")
 TODO_FILE = join(TODO_DIR, "todo.txt")
 
 STYLESHEET = """
+QWidget
+{
+    font-size: 16px;
+}
+
 QPlainTextEdit
 {
     font-size: 18px;
@@ -47,6 +52,7 @@ class Done(QMainWindow):
         self.resize(600, 600)
         self._center()
         self.setStyleSheet(STYLESHEET)
+        self.setUnifiedTitleAndToolBarOnMac(True)
 
         # Set up actions.
         sortDueAscendingAction = QAction("Sort", self)
