@@ -39,6 +39,8 @@ class Done(QMainWindow):
         super(Done, self).__init__()
         self._debug = debug
 
+        self._todoList = TodoListModel(TODO_FILE)
+
         self._initUI()
 
         self._loadTodoList()
@@ -117,12 +119,10 @@ class Done(QMainWindow):
         self.setCentralWidget(centralWidget)
 
     def _loadTodoList(self):
-        todoList = self._todoList
-        self._todoListEdit.setPlainText(todoList)
+        self._todoListEdit.setPlainText(self._todoList.get())
 
     def _saveTodoList(self):
-        todoList = self._todoListEdit.toPlainText().encode('utf8')
-        self._todoList = todoList
+        self._todoList.set(self._todoListEdit.toPlainText().encode('utf8'))
 
     def _center(self):
         qr = self.frameGeometry()
@@ -154,17 +154,6 @@ class Done(QMainWindow):
 
         self._todoListEdit.setPlainText(todoList)
 
-    @property
-    def _todoList(self):
-        with open(TODO_FILE, "r+") as todoListFile:
-            return todoListFile.read().decode('utf8')
-
-    @_todoList.setter
-    def _todoList(self, todoList):
-        with open(TODO_FILE, "r+") as todoListFile:
-            todoListFile.write(todoList)
-            todoListFile.truncate()
-
     def _startDebug(self):
         from pudb import set_trace
         set_trace()
@@ -175,6 +164,42 @@ class Done(QMainWindow):
 
     def _doneWebsite(self):
         QDesktopServices.openUrl(QUrl(DONE_WEBSITE, QUrl.TolerantMode))
+
+def TodoListModel(self):
+
+    def __init__(self, todoListPath):
+        self._todoListPath = todoListPath
+
+    @Slot(unicode)
+    def set(self, todoList):
+        """
+        Modify todo list (without causing a todoListChanged signal to be generated)
+        """
+        self._todoList = todoList
+
+    def get(self):
+        return self._todoList
+
+    @Signal(unicode)
+    def todoListChanged(self):
+        """
+        Signal generated when internal data structure has changed.
+        For example, if polling a file and the file has been modified.
+
+        :return: latest version of the todo list
+        """
+        return self.get()
+
+    @property
+    def _todoList(self):
+        with open(self._todoListPath, "r+") as todoListFile:
+            return todoListFile.read().decode('utf8')
+
+    @_todoList.setter
+    def _todoList(self, todoList):
+        with open(self._todoListPath, "r+") as todoListFile:
+            todoListFile.write(todoList)
+            todoListFile.truncate()
 
 def main():
     parser = argparse.ArgumentParser()
