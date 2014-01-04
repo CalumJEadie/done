@@ -33,6 +33,8 @@ QPlainTextEdit
 
 DONE_WEBSITE = "https://github.com/CalumJEadie/done"
 
+TODO_SH = "/usr/local/bin/todo.sh"
+
 class Done(QMainWindow):
 
     def __init__(self, debug):
@@ -170,7 +172,7 @@ class Done(QMainWindow):
         set_trace()
 
     def _archive(self):
-        subprocess.call(["todo.sh", "archive"])
+        subprocess.call([TODO_SH, "archive"])
         self._loadTodoList()
 
     def _doneWebsite(self):
