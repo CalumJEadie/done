@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 # Configuration
 TODO_DIR = os.path.expanduser("~/todo")
 TODO_FILE = join(TODO_DIR, "todo.txt")
+DONE_FILE = join(TODO_DIR, "done.txt")
 
 STYLESHEET = """
 QWidget
@@ -82,6 +83,9 @@ class Done(QMainWindow):
         doneWebsiteAction = QAction("Done Website", self)
         doneWebsiteAction.triggered.connect(self._doneWebsite)
 
+        openDoneAction = QAction("Open done.txt", self)
+        openDoneAction.triggered.connect(self._openDone)
+
         # Set up toolbar
         toolbar = self.addToolBar('')
         toolbar.setFloatable(False)
@@ -97,6 +101,8 @@ class Done(QMainWindow):
 
         fileMenu = menubar.addMenu('&File')
         fileMenu.addAction(reloadAction)
+        fileMenu.addSeparator()
+        fileMenu.addAction(openDoneAction)
         editMenu = menubar.addMenu('&Edit')
         editMenu.addAction(sortDueAscendingAction)
         editMenu.addAction(archiveAction)
@@ -179,6 +185,9 @@ class Done(QMainWindow):
 
     def _doneWebsite(self):
         QDesktopServices.openUrl(QUrl(DONE_WEBSITE, QUrl.TolerantMode))
+
+    def _openDone(self):
+        QDesktopServices.openUrl(QUrl(DONE_FILE, QUrl.TolerantMode))
 
 def main():
     parser = argparse.ArgumentParser()
