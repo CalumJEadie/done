@@ -26,10 +26,12 @@ QWidget
 
 QPlainTextEdit
 {
-    font-size: 18px;
+    font-size: 14px;
     font-family: "Menlo";
 }
 """
+
+WIDTH, HEIGHT = (800, 400)
 
 DONE_WEBSITE = "https://github.com/CalumJEadie/done"
 
@@ -54,7 +56,7 @@ class Done(QMainWindow):
         # Set up window.
 
         self.setWindowTitle(TODO_FILE)
-        self.resize(600, 600)
+        self.resize(WIDTH, HEIGHT)
         self._center()
         self.setStyleSheet(STYLESHEET)
         self.setUnifiedTitleAndToolBarOnMac(True)
