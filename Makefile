@@ -7,3 +7,6 @@ clean:
 	rm -r *.egg
 	rm -r build
 	rm -r dist
+
+deploy:
+	cp -rv dist/Done.app ${HOME}/Applications
