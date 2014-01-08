@@ -23,15 +23,9 @@ QWidget
 {
     font-size: 16px;
 }
-
-QPlainTextEdit
-{
-    font-size: 14px;
-    font-family: "Menlo";
-}
 """
 
-WIDTH, HEIGHT = (800, 400)
+WIDTH, HEIGHT = (600, 600)
 
 DONE_WEBSITE = "https://github.com/CalumJEadie/done"
 
@@ -111,8 +105,9 @@ class Done(QMainWindow):
 
         vboxLayout = QVBoxLayout()
 
-        self._todoListEdit = QPlainTextEdit()
+        self._todoListEdit = QTextEdit()
         self._todoListEdit.textChanged.connect(self._saveTodoList)
+        self._todoListEdit.setAcceptRichText(False)
 
         vboxLayout.addWidget(self._todoListEdit)
 
@@ -122,7 +117,7 @@ class Done(QMainWindow):
 
     def _loadTodoList(self):
         todoList = self._todoList
-        self._todoListEdit.setPlainText(todoList)
+        self._todoListEdit.setHtml(self._txtToHTML(todoList))
 
     def _saveTodoList(self):
         todoList = self._todoListEdit.toPlainText().encode('utf8')
@@ -154,9 +149,11 @@ class Done(QMainWindow):
 
         todoList = todoList.split("\n")
         todoList.sort(key=key)
-        todoList = "\n".join(todoList).decode('utf8')
+        todoList = "\n".join(todoList)
 
-        self._todoListEdit.setPlainText(todoList)
+        self._todoList = todoList
+
+        self._loadTodoList()
 
     @property
     def _todoList(self):
@@ -179,6 +176,13 @@ class Done(QMainWindow):
 
     def _doneWebsite(self):
         QDesktopServices.openUrl(QUrl(DONE_WEBSITE, QUrl.TolerantMode))
+
+    def _txtToHTML(self, todoList):
+        html = []
+        todoHTML = """<p>%s<p>"""
+        for todo in todoList.split("\n"):
+            html.append(todoHTML % todo)
+        return "\n".join(html)
 
 def main():
     parser = argparse.ArgumentParser()
