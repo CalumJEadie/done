@@ -1,7 +1,7 @@
 Done
 ====
 
-A lean graphical interface for your todo.txt file.
+A lean graphical interface to your [todo.txt](http://todotxt.com/) tasks.
 
 Features
 --------
