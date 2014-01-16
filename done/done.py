@@ -17,25 +17,27 @@ logger = logging.getLogger(__name__)
 # Configuration
 TODO_DIR = os.path.expanduser("~/todo")
 TODO_FILE = join(TODO_DIR, "todo.txt")
-
-STYLESHEET = """
-QWidget
-{
-    font-size: 16px;
-}
-"""
-
 WIDTH, HEIGHT = (600, 600)
-
-DONE_WEBSITE = "https://github.com/CalumJEadie/done"
-
 TODO_SH = "/usr/local/bin/todo.sh"
 
 class Done(QMainWindow):
 
-    def __init__(self, debug):
+    _stylesheet = """
+    QWidget
+    {
+        font-size: 16px;
+    }
+    """
+    _url = "https://github.com/CalumJEadie/done"
+
+    def __init__(self, debug, width, height, todoFilePath, todoCliPath):
         super(Done, self).__init__()
+
         self._debug = debug
+        self._width = width
+        self._height = height
+        self._todoFilePath = todoFilePath
+        self._todoCliPath = todoCliPath
 
         self._initUI()
 
@@ -49,10 +51,10 @@ class Done(QMainWindow):
 
         # Set up window.
 
-        self.setWindowTitle(TODO_FILE)
-        self.resize(WIDTH, HEIGHT)
+        self.setWindowTitle(self._todoFilePath)
+        self.resize(self._width, self._height)
         self._center()
-        self.setStyleSheet(STYLESHEET)
+        self.setStyleSheet(self._stylesheet)
         self.setUnifiedTitleAndToolBarOnMac(True)
 
         # Set up actions.
@@ -157,12 +159,12 @@ class Done(QMainWindow):
 
     @property
     def _todoList(self):
-        with open(TODO_FILE, "r+") as todoListFile:
+        with open(self._todoFilePath, "r+") as todoListFile:
             return todoListFile.read().decode('utf8')
 
     @_todoList.setter
     def _todoList(self, todoList):
-        with open(TODO_FILE, "r+") as todoListFile:
+        with open(self._todoFilePath, "r+") as todoListFile:
             todoListFile.write(todoList)
             todoListFile.truncate()
 
@@ -171,11 +173,11 @@ class Done(QMainWindow):
         set_trace()
 
     def _archive(self):
-        subprocess.call([TODO_SH, "archive"])
+        subprocess.call([self._todoCliPath, "archive"])
         self._loadTodoList()
 
     def _doneWebsite(self):
-        QDesktopServices.openUrl(QUrl(DONE_WEBSITE, QUrl.TolerantMode))
+        QDesktopServices.openUrl(QUrl(self._url, QUrl.TolerantMode))
 
     def _txtToHTML(self, todoList):
         html = []
@@ -190,7 +192,7 @@ def main():
     args = parser.parse_args()
 
     app = QApplication(sys.argv)
-    done = Done(args.debug)
+    done = Done(args.debug, WIDTH, HEIGHT, TODO_FILE, TODO_SH)
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
