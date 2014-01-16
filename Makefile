@@ -14,6 +14,7 @@ deploy:
 	cp -rv dist/Done.app ${HOME}/Applications
 
 github: osx
-	mkdir dist/done-osx
-	cp -rv dist/Done.app dist/done-osx-$(VERSION)
-	zip -r dist/done-osx-$(VERSION).zip dist/done-osx-$(VERSION)
+	mkdir dist/done-osx-$(VERSION)/
+	cp -rv dist/Done.app dist/done-osx-$(VERSION)/
+	cd dist
+	zip -r done-osx-$(VERSION).zip done-osx-$(VERSION)
