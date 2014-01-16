@@ -14,6 +14,15 @@ Features
 
   ![Instant update](screenshots/screenshot-3.png)
 
+Assumptions
+-----------
+
+`todo.txt` is at `~/todo.txt`
+
+`todo.sh` is at `/usr/local/bin/todo.sh`
+
+`Done` can work with `todo.txt` and `todo.sh` installed in different locations by symlinking from the locations on your system to the locations above.
+
 Packaging
 ---------
 
