@@ -43,7 +43,7 @@ cd done
 ./done.sh
 ```
 
-Dependancies
+Dependencies
 ------------
 
 [PySide](http://qt-project.org/wiki/PySide) - Python Qt bindings
